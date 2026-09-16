@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Acceso</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --bg-dark: #121b22;
+  --bg-card: #1f2c34;
+  --bg-hover: #222d34;
+  --accent-green: #00a884;
+  --text-primary: #e9edef;
+  --text-secondary: #8696a0;
+  --border-color: #222d34;
+  --error-color: #f15c6d;
+}
+
+body {
+  height: 100vh;
+  height: 100dvh;
+  background-color: #0b141a;
+  color: var(--text-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.pantalla {
+  display: none;
+  width: 100%;
+  max-width: 480px;
+  height: 100%;
+  flex-direction: column;
+  position: relative;
+  background: var(--bg-dark);
+}
+
+.activa {
+  display: flex;
+}
+
+/* ================= CARGA ================= */
+#carga {
+  justify-content: center;
+  align-items: center;
+  background: var(--bg-dark);
+  padding: 20px;
+}
+
+.logo-wrapper {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+#logoCarga {
+  width: 110px;
+  height: auto;
+}
+
+.barra {
+  width: 80%;
+  max-width: 280px;
+  height: 6px;
+  background: #202c33;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progreso {
+  height: 100%;
+  width: 0%;
+  background: var(--accent-green);
+  border-radius: 10px;
+  animation: llenar 6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes llenar {
+  0% { width: 0%; }
+  50% { width: 70%; }
+  100% { width: 100%; }
+}
+
+@keyframes pulse {
+  0% { opacity: 0.4; transform: scale(0.95); }
+  50% { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 0.4; transform: scale(0.95); }
+}
+
+/* ================= LOGIN ================= */
+#login {
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: radial-gradient(circle at top, #1f2c34 0%, #121b22 70%);
+}
+
+.contenedor {
+  width: 100%;
+  max-width: 360px;
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+#logoLogin {
+  width: 85px;
+  height: auto;
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  line-height: 1.3;
+}
+
+.grupo-input {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+input {
+  width: 100%;
+  padding: 14px 16px;
+  background: #111b21;
+  border: 1px solid #2a3942;
+  border-radius: 10px;
+  outline: none;
+  font-size: 15px;
+  color: var(--text-primary);
+  transition: border-color 0.2s;
+}
+
+input:focus {
+  border-color: var(--accent-green);
+}
+
+input::placeholder {
+  color: var(--text-secondary);
+}
+
+button.btn-principal {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 12px;
+  background: var(--accent-green);
+  color: #111b21;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+button.btn-principal:active {
+  transform: scale(0.98);
+}
+
+#mensajeError {
+  margin-top: 14px;
+  color: var(--error-color);
+  font-size: 13px;
+  min-height: 18px;
+}
+
+/* ================= CHATS ================= */
+#chats {
+  height: 100%;
+  overflow: hidden;
+}
+
+.barraSuperior {
+  width: 100%;
+  background: var(--bg-card);
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  z-index: 10;
+}
+
+.contenido-scroll {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.contenido-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.contenido-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.contenido-scroll::-webkit-scrollbar-thumb {
+  background: #374248;
+  border-radius: 3px;
+}
+
+.aviso {
+  width: 92%;
+  background: #182229;
+  border-left: 4px solid var(--accent-green);
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin: 12px 0;
+  font-size: 13px;
+  color: #d1d7db;
+  line-height: 1.4;
+}
+
+.estadoSistema {
+  width: 92%;
+  background: #111b21;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  color: var(--accent-green);
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #222d34;
+}
+
+.listaChats {
+  width: 100%;
+}
+
+.chat {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-dark);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.chat:active, .chat:hover {
+  background: var(--bg-hover);
+}
+
+.foto {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #6c7883;
+  margin-right: 14px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #111b21;
+  font-weight: bold;
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+}
+
+.meta-chat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.nombre {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.hora {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.subcontenido {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mensaje {
+  color: var(--text-secondary);
+  filter: blur(4px);
+  user-select: none;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 85%;
+}
+
+.check {
+  font-size: 15px;
+  color: #53bdeb;
+  margin-left: 6px;
+}
+
+.check.gris {
+  color: var(--text-secondary);
+}
+
+.area-accion {
+  width: 92%;
+  margin-top: 16px;
+}
+
+#btnDesbloquear {
+  background: var(--accent-green);
+  color: #111b21;
+}
+
+/* ================= MODAL ================= */
+.modal-sistema {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(11, 20, 26, 0.85);
+  backdrop-filter: blur(4px);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  padding: 20px;
+}
+
+.modal-contenido {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  max-width: 340px;
+  text-align: center;
+  color: var(--text-primary);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+}
+
+.modal-contenido h4 {
+  color: #f15c6d;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.modal-contenido p {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.modal-btn {
+  background: #2a3942;
+  color: var(--text-primary);
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ================= CONTACTO ================= */
+#contacto {
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.tarjeta {
+  background: var(--bg-card);
+  padding: 28px 20px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+}
+
+.tarjeta h3 {
+  margin-bottom: 12px;
+  font-size: 20px;
+}
+
+.tarjeta p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.contactoBtn {
+  display: block;
+  text-decoration: none;
+  background: var(--accent-green);
+  color: #111b21;
+  padding: 14px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.btn-secundario {
+  background: transparent;
+  color: var(--text-secondary);
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div id="miModal" class="modal-sistema">
+  <div class="modal-contenido">
+    <h4>ACCESO RESTRINGIDO</h4>
+    <p id="modalTexto">Contenido no disponible.</p>
+    <button class="modal-btn" onclick="cerrarModal()">ENTENDIDO</button>
+  </div>
+</div>
+
+<div id="carga" class="pantalla activa">
+  <div class="logo-wrapper">
+    <img id="logoCarga" src="logo.png" alt="Logo">
+  </div>
+  <div class="barra">
+    <div class="progreso"></div>
+  </div>
+</div>
+
+<div id="login" class="pantalla">
+  <div class="contenedor">
+    <img id="logoLogin" src="logo.png" alt="Logo">
+    <h2>Ingresar al Sistema</h2>
+
+    <div class="grupo-input">
+      <input type="text" id="numeroUsuario" placeholder="Número de usuario">
+      <input type="password" id="password" placeholder="Contraseña">
+    </div>
+    
+    <button class="btn-principal" onclick="verificarAcceso()">INGRESAR</button>
+
+    <p id="mensajeError"></p>
+  </div>
+</div>
+
+<div id="chats" class="pantalla">
+
+  <div class="barraSuperior">
+    <span>+52 664 189 5193</span>
+  </div>
+
+  <div class="contenido-scroll">
+    <div class="aviso">
+      Cuenta sincronizada. Los mensajes recientes se encuentran protegidos. Para habilitar la visualización completa de los chats, solicita la autorización correspondiente.
+    </div>
+
+    <div class="estadoSistema">
+      <span id="estadoTexto">Cargando conversaciones...</span>
+      <span style="width:8px;height:8px;background:var(--accent-green);border-radius:50%;display:inline-block;animation:pulse 1.5s infinite;"></span>
+    </div>
+
+    <div class="listaChats">
+
+      <div class="chat" onclick="intentarAbrirChat('Jes***')">
+        <div class="foto">J</div>
+        <div class="info">
+          <div class="meta-chat">
+            <div class="nombre">Jes***</div>
+            <div class="hora">ayer</div>
+          </div>
+          <div class="subcontenido">
+            <div class="mensaje">Ya revisé el detalle y eliminé el reporte anterior como quedamos...</div>
+            <span class="check">✓✓</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat" onclick="intentarAbrirChat('+52 ••• •• 5634')">
+        <div class="foto">#</div>
+        <div class="info">
+          <div class="meta-chat">
+            <div class="nombre">+52 ••• •• 5634</div>
+            <div class="hora">ayer</div>
+          </div>
+          <div class="subcontenido">
+            <div class="mensaje">Te mandé los documentos que me pediste por la mañana.</div>
+            <span class="check">✓✓</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat" onclick="intentarAbrirChat('Mon***')">
+        <div class="foto">M</div>
+        <div class="info">
+          <div class="meta-chat">
+            <div class="nombre">Mon***</div>
+            <div class="hora">Ayer</div>
+          </div>
+          <div class="subcontenido">
+            <div class="mensaje">Envío de archivos y material adjunto finalizado correctamente.</div>
+            <span class="check">✓✓</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat" onclick="intentarAbrirChat('+52 ••• •• 1842')">
+        <div class="foto">#</div>
+        <div class="info">
+          <div class="meta-chat">
+            <div class="nombre">+52 ••• •• 1842</div>
+            <div class="hora">hace 2 días</div>
+          </div>
+          <div class="subcontenido">
+            <div class="mensaje">Recuerda que la confirmación vence hoy antes de la tarde.</div>
+            <span class="check gris">✓✓</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat" onclick="intentarAbrirChat('Car***')">
+        <div class="foto">C</div>
+        <div class="info">
+          <div class="meta-chat">
+            <div class="nombre">Car***</div>
+            <div class="hora">hace 2 días</div>
+          </div>
+          <div class="subcontenido">
+            <div class="mensaje">Copia de seguridad guardada con éxito en la carpeta correspondiente.</div>
+            <span class="check">✓✓</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat" onclick="intentarAbrirChat('+52 ••• •• 9021')">
+        <div class="foto">#</div>
+        <div class="info">
+          <div class="meta-chat">
+            <div class="nombre">+52 ••• •• 9021</div>
+            <div class="hora">hace 3 días</div>
+          </div>
+          <div class="subcontenido">
+            <div class="mensaje">¿Pudiste revisar la información enviada antes de la actualización?</div>
+            <span class="check gris">✓✓</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat" onclick="intentarAbrirChat('Val***')">
+        <div class="foto">V</div>
+        <div class="info">
+          <div class="meta-chat">
+            <div class="nombre">Val***</div>
+            <div class="hora">hace 4 días</div>
+          </div>
+          <div class="subcontenido">
+            <div class="mensaje">Nos vemos más tarde para revisar lo pendiente.</div>
+            <span class="check">✓✓</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat" onclick="intentarAbrirChat('+52 ••• •• 4410')">
+        <div class="foto">#</div>
+        <div class="info">
+          <div class="meta-chat">
+            <div class="nombre">+52 ••• •• 4410</div>
+            <div class="hora">hace 5 días</div>
+          </div>
+          <div class="subcontenido">
+            <div class="mensaje">Confirmo la recepción de las capturas requeridas. Quedo al pendiente.</div>
+            <span class="check">✓✓</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat" onclick="intentarAbrirChat('Fer***')">
+        <div class="foto">F</div>
+        <div class="info">
+          <div class="meta-chat">
+            <div class="nombre">Fer***</div>
+            <div class="hora">hace 5 días</div>
+          </div>
+          <div class="subcontenido">
+            <div class="mensaje">Por favor vuelve a mandar el código porque ya expiró.</div>
+            <span class="check gris">✓✓</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat" onclick="intentarAbrirChat('+52 ••• •• 0019')">
+        <div class="foto">#</div>
+        <div class="info">
+          <div class="meta-chat">
+            <div class="nombre">+52 ••• •• 0019</div>
+            <div class="hora">hace 1 sem.</div>
+          </div>
+          <div class="subcontenido">
+            <div class="mensaje">Te aviso en cuanto termine de subir los archivos al drive.</div>
+            <span class="check gris">✓✓</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="area-accion">
+      <button class="btn-principal" id="btnDesbloquear" onclick="abrirContacto()">
+        SOLICITAR ACCESO COMPLETO
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================= CONTACTO ACTUALIZADO ================= -->
+<div id="contacto" class="pantalla">
+  <div class="tarjeta">
+    <h3>Verificación de Licencia</h3>
+    <p>
+      Esta sesión requiere una actualización de autenticación adicional para desencriptar el historial de chats y adjuntos. Comunícate con administración para solicitar tu actualización.
+    </p>
+    <a class="contactoBtn" href="https://m.me/61591991010168" target="_blank">
+      SOLICITAR VALIDACIÓN
+    </a>
+    <button class="btn-secundario" onclick="volverChats()">Volver a la lista</button>
+  </div>
+</div>
+
+<script>
+/* ===== CAMBIO AUTOMÁTICO ===== */
+setTimeout(() => {
+  document.getElementById('carga').classList.remove('activa');
+  document.getElementById('login').classList.add('activa');
+}, 6000);
+
+/* ===== CREDENCIALES VALIDADAS ===== */
+const usuarioValido = '6641895193';
+const passValida = 'whatsapp';
+
+/* ===== FORMULARIO UNIFICADO ===== */
+function verificarAcceso(){
+  const numero = document.getElementById('numeroUsuario').value.trim();
+  const pass = document.getElementById('password').value;
+  const msgError = document.getElementById('mensajeError');
+
+  if(numero === usuarioValido && pass === passValida){
+    document.getElementById('login').classList.remove('activa');
+    document.getElementById('chats').classList.add('activa');
+  } else if (numero !== usuarioValido) {
+    msgError.innerText = 'Número de usuario no registrado';
+    animarError();
+  } else {
+    document.getElementById('password').value = '';
+    msgError.innerText = 'Contraseña incorrecta';
+    animarError();
+  }
+}
+
+/* ===== ANIMACIÓN ERROR ===== */
+function animarError(){
+  const cont = document.querySelector('.contenedor');
+  cont.style.transform = 'translateX(6px)';
+  setTimeout(() => { cont.style.transform = 'translateX(-6px)'; }, 100);
+  setTimeout(() => { cont.style.transform = 'translateX(0px)'; }, 200);
+}
+
+/* ===== MODAL ===== */
+function intentarAbrirChat(nombreUsuario) {
+  const modal = document.getElementById('miModal');
+  const texto = document.getElementById('modalTexto');
+  
+  texto.innerHTML = `No se puede abrir la conversación con <strong>"${nombreUsuario}"</strong>.<br><br>Por políticas de privacidad, los mensajes de este chat no están disponibles.<br><br>Utiliza la opción <strong>"Solicitar Acceso Completo"</strong> para gestionar la liberación.`;
+  modal.style.display = 'flex';
+}
+
+function cerrarModal() {
+  document.getElementById('miModal').style.display = 'none';
+}
+
+/* ===== NAVEGACIÓN ===== */
+function abrirContacto(){
+  document.getElementById('chats').classList.remove('activa');
+  document.getElementById('contacto').classList.add('activa');
+}
+
+function volverChats(){
+  document.getElementById('contacto').classList.remove('activa');
+  document.getElementById('chats').classList.add('activa');
+}
+
+/* ===== ESTADOS ===== */
+const estados = [
+  'Cargando conversaciones...',
+  'Verificando estado de la cuenta...',
+  'Sincronizando chats archivados...',
+  'Comprobando permisos de acceso...',
+  'Actualizando lista de contactos...'
+];
+
+let indiceEstado = 0;
+setInterval(() => {
+  const estado = document.getElementById('estadoTexto');
+  if(estado){
+    indiceEstado = (indiceEstado + 1) % estados.length;
+    estado.innerText = estados[indiceEstado];
+  }
+}, 3000);
+</script>
+
+</body>
+</html>
