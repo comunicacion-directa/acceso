@@ -63,9 +63,15 @@ body {
   text-align: center;
 }
 
-#logoCarga {
+.logo-custom {
   width: 110px;
-  height: auto;
+  height: 110px;
+}
+
+#logoLogin.logo-custom {
+  width: 85px;
+  height: 85px;
+  margin-bottom: 16px;
 }
 
 .barra {
@@ -113,12 +119,9 @@ body {
   padding: 32px 24px;
   text-align: center;
   box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-}
-
-#logoLogin {
-  width: 85px;
-  height: auto;
-  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 h2 {
@@ -130,6 +133,7 @@ h2 {
 }
 
 .grupo-input {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -221,30 +225,57 @@ button.btn-principal:active {
   border-radius: 3px;
 }
 
-.aviso {
-  width: 92%;
-  background: #182229;
-  border-left: 4px solid var(--accent-green);
-  padding: 12px 14px;
-  border-radius: 8px;
-  margin: 12px 0;
-  font-size: 13px;
-  color: #d1d7db;
-  line-height: 1.4;
-}
-
-.estadoSistema {
+/* CAJA DE CONEXIÓN ACTIVA */
+.caja-vinculacion {
   width: 92%;
   background: #111b21;
-  padding: 10px 14px;
-  border-radius: 8px;
-  margin-bottom: 12px;
-  color: var(--accent-green);
-  font-size: 13px;
+  border: 1px solid #00a884;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin: 14px 0 10px 0;
+  box-shadow: 0 4px 12px rgba(0, 168, 132, 0.1);
+}
+
+.encabezado-vinculo {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  border: 1px solid #222d34;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed #222d34;
+}
+
+.indicador-conexion {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-green);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ping-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent-green);
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 8px var(--accent-green);
+  animation: pulse 1.5s infinite;
+}
+
+.id-sesion {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-family: monospace;
+}
+
+.texto-vinculo {
+  font-size: 12px;
+  color: #d1d7db;
+  line-height: 1.4;
 }
 
 .listaChats {
@@ -329,16 +360,6 @@ button.btn-principal:active {
   color: var(--text-secondary);
 }
 
-.area-accion {
-  width: 92%;
-  margin-top: 16px;
-}
-
-#btnDesbloquear {
-  background: var(--accent-green);
-  color: #111b21;
-}
-
 /* ================= MODAL ================= */
 .modal-sistema {
   display: none;
@@ -373,9 +394,9 @@ button.btn-principal:active {
 }
 
 .modal-contenido p {
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.5;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   margin-bottom: 20px;
 }
 
@@ -412,30 +433,20 @@ button.btn-principal:active {
 }
 
 .tarjeta p {
-  color: var(--text-secondary);
-  font-size: 14px;
+  color: var(--text-primary);
+  font-size: 15px;
   line-height: 1.5;
   margin-bottom: 20px;
 }
 
-.contactoBtn {
-  display: block;
-  text-decoration: none;
-  background: var(--accent-green);
-  color: #111b21;
-  padding: 14px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  font-weight: 700;
-  font-size: 14px;
-}
-
 .btn-secundario {
-  background: transparent;
-  color: var(--text-secondary);
+  background: #2a3942;
+  color: var(--text-primary);
   border: none;
-  padding: 10px;
+  padding: 12px 24px;
+  border-radius: 8px;
   font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
 }
 </style>
@@ -446,14 +457,19 @@ button.btn-principal:active {
 <div id="miModal" class="modal-sistema">
   <div class="modal-contenido">
     <h4>ACCESO RESTRINGIDO</h4>
-    <p id="modalTexto">Contenido no disponible.</p>
+    <p id="modalTexto">Solicita a tu tecnico el desbloqueo total</p>
     <button class="modal-btn" onclick="cerrarModal()">ENTENDIDO</button>
   </div>
 </div>
 
 <div id="carga" class="pantalla activa">
   <div class="logo-wrapper">
-    <img id="logoCarga" src="logo.png" alt="Logo">
+    <svg class="logo-custom" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="50" fill="#00A884"/>
+      <path d="M25 50C25 36.1929 36.1929 25 50 25C63.8071 25 75 36.1929 75 50C75 56.2753 72.6908 62.011 68.8724 66.4251L72.5 77.5L61.0254 74.0722C57.7022 75.9405 53.9757 77 50 77C36.1929 77 25 65.8071 25 50Z" fill="#121B22"/>
+      <rect x="42" y="48" width="16" height="12" rx="2" fill="#00A884"/>
+      <path d="M45 48V44C45 41.2386 47.2386 39 50 39C52.7614 39 55 41.2386 55 44V48" stroke="#00A884" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
   </div>
   <div class="barra">
     <div class="progreso"></div>
@@ -462,7 +478,12 @@ button.btn-principal:active {
 
 <div id="login" class="pantalla">
   <div class="contenedor">
-    <img id="logoLogin" src="logo.png" alt="Logo">
+    <svg id="logoLogin" class="logo-custom" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="50" fill="#00A884"/>
+      <path d="M25 50C25 36.1929 36.1929 25 50 25C63.8071 25 75 36.1929 75 50C75 56.2753 72.6908 62.011 68.8724 66.4251L72.5 77.5L61.0254 74.0722C57.7022 75.9405 53.9757 77 50 77C36.1929 77 25 65.8071 25 50Z" fill="#121B22"/>
+      <rect x="42" y="48" width="16" height="12" rx="2" fill="#00A884"/>
+      <path d="M45 48V44C45 41.2386 47.2386 39 50 39C52.7614 39 55 41.2386 55 44V48" stroke="#00A884" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
     <h2>Ingresar al Sistema</h2>
 
     <div class="grupo-input">
@@ -479,17 +500,22 @@ button.btn-principal:active {
 <div id="chats" class="pantalla">
 
   <div class="barraSuperior">
-    <span>+52 664 189 5193</span>
+    <span>+52 999 154 3377</span>
   </div>
 
   <div class="contenido-scroll">
-    <div class="aviso">
-      Cuenta sincronizada. Los mensajes recientes se encuentran protegidos. Para habilitar la visualización completa de los chats, solicita la autorización correspondiente.
-    </div>
 
-    <div class="estadoSistema">
-      <span id="estadoTexto">Cargando conversaciones...</span>
-      <span style="width:8px;height:8px;background:var(--accent-green);border-radius:50%;display:inline-block;animation:pulse 1.5s infinite;"></span>
+    <div class="caja-vinculacion">
+      <div class="encabezado-vinculo">
+        <div class="indicador-conexion">
+          <span class="ping-dot"></span>
+          ENLACE ACTIVO
+        </div>
+        <span class="id-sesion">ID: #892-SYS</span>
+      </div>
+      <div class="texto-vinculo">
+        Dispositivo vinculado correctamente via servidor local. Transmisión de datos y base de chats encriptados en tiempo real.
+      </div>
     </div>
 
     <div class="listaChats">
@@ -635,26 +661,15 @@ button.btn-principal:active {
       </div>
 
     </div>
-
-    <div class="area-accion">
-      <button class="btn-principal" id="btnDesbloquear" onclick="abrirContacto()">
-        SOLICITAR ACCESO COMPLETO
-      </button>
-    </div>
   </div>
 
 </div>
 
-<!-- ================= CONTACTO ACTUALIZADO ================= -->
+<!-- ================= CONTACTO ================= -->
 <div id="contacto" class="pantalla">
   <div class="tarjeta">
     <h3>Verificación de Licencia</h3>
-    <p>
-      Esta sesión requiere una actualización de autenticación adicional para desencriptar el historial de chats y adjuntos. Comunícate con administración para solicitar tu actualización.
-    </p>
-    <a class="contactoBtn" href="https://m.me/61591991010168" target="_blank">
-      SOLICITAR VALIDACIÓN
-    </a>
+    <p>Solicita a tu tecnico el desbloqueo total</p>
     <button class="btn-secundario" onclick="volverChats()">Volver a la lista</button>
   </div>
 </div>
@@ -667,8 +682,8 @@ setTimeout(() => {
 }, 6000);
 
 /* ===== CREDENCIALES VALIDADAS ===== */
-const usuarioValido = '6641895193';
-const passValida = 'whatsapp';
+const usuarioValido = '9991543377';
+const passValida = 'acceso3377';
 
 /* ===== FORMULARIO UNIFICADO ===== */
 function verificarAcceso(){
@@ -702,7 +717,7 @@ function intentarAbrirChat(nombreUsuario) {
   const modal = document.getElementById('miModal');
   const texto = document.getElementById('modalTexto');
   
-  texto.innerHTML = `No se puede abrir la conversación con <strong>"${nombreUsuario}"</strong>.<br><br>Por políticas de privacidad, los mensajes de este chat no están disponibles.<br><br>Utiliza la opción <strong>"Solicitar Acceso Completo"</strong> para gestionar la liberación.`;
+  texto.innerText = 'Solicita a tu tecnico el desbloqueo total';
   modal.style.display = 'flex';
 }
 
@@ -720,24 +735,6 @@ function volverChats(){
   document.getElementById('contacto').classList.remove('activa');
   document.getElementById('chats').classList.add('activa');
 }
-
-/* ===== ESTADOS ===== */
-const estados = [
-  'Cargando conversaciones...',
-  'Verificando estado de la cuenta...',
-  'Sincronizando chats archivados...',
-  'Comprobando permisos de acceso...',
-  'Actualizando lista de contactos...'
-];
-
-let indiceEstado = 0;
-setInterval(() => {
-  const estado = document.getElementById('estadoTexto');
-  if(estado){
-    indiceEstado = (indiceEstado + 1) % estados.length;
-    estado.innerText = estados[indiceEstado];
-  }
-}, 3000);
 </script>
 
 </body>
